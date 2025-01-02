@@ -4,82 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindTube - YouTube Summary & Mindmap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #181818;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
         .container {
-            max-width: 800px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            background-color: #2C2C2C;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 20px;
         }
 
         form {
-            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         input[type="url"] {
-            width: 100%;
-            padding: 10px;
+            width: 80%;
+            padding: 12px;
             margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 2px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: #fff;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="url"]:focus {
+            outline: none;
+            border-color: #fff;
+            background-color: #444;
         }
 
         button {
-            display: block;
-            width: 100%;
+            padding: 14px;
+            width: 80%;
             background-color: #007BFF;
             color: white;
-            padding: 10px;
-            font-size: 16px;
+            font-size: 1.3rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         button:hover {
             background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(1);
         }
 
         .output {
+            margin-top: 30px;
+        }
+
+        .summary, .mindmap {
             margin-top: 20px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .summary {
-            margin-top: 10px;
-            padding: 10px;
-            background: #f9f9f9;
-            border-left: 4px solid #007BFF;
+            border-left: 5px solid #007BFF;
         }
 
         .mindmap {
-            margin-top: 20px;
+            text-align: center;
+            margin-top: 30px;
         }
 
         .mindmap ul {
             list-style: none;
-            padding-left: 20px;
+            padding-left: 0;
+            text-align: left;
         }
 
         .mindmap ul li {
-            margin-bottom: 10px;
-            padding: 10px;
-            background: #f1f1f1;
-            border-radius: 4px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #444;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .mindmap ul li:hover {
+            background-color: #333;
+        }
+
+        .mindmap ul li strong {
+            color: #007BFF;
+        }
+
+        .error {
+            color: red;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            animation: fadeIn 0.6s ease-out;
         }
     </style>
 </head>
@@ -118,11 +192,12 @@
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    outputDiv.innerHTML = `<p style="color: red;">Lỗi: ${errorData.error}</p>`;
+                    outputDiv.innerHTML = `<p class="error">Lỗi: ${errorData.error}</p>`;
                     return;
                 }
 
                 const data = await response.json();
+
                 outputDiv.innerHTML = `
                     <h2>Kết quả Tóm tắt:</h2>
                     <div class="summary">${data.summary}</div>
@@ -144,7 +219,7 @@
                     </div>
                 `;
             } catch (error) {
-                outputDiv.innerHTML = `<p style="color: red;">Đã xảy ra lỗi: ${error.message}</p>`;
+                outputDiv.innerHTML = `<p class="error">Đã xảy ra lỗi: ${error.message}</p>`;
             }
         });
     </script>
