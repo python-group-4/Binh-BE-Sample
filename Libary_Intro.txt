@@ -1,0 +1,15 @@
+--:> pip install flask aiohttp asyncio google-generativeai transformers youtube-transcript-api
+
+
+
+
+
+from flask import Flask, render_template, request, jsonify
+import aiohttp
+import asyncio
+import json
+import google.generativeai as genai
+import time
+from transformers import GPT2Tokenizer
+import re
+from youtube_transcript_api import YouTubeTranscriptApi
