@@ -90,7 +90,7 @@ def summarize():
         return jsonify({"error": error}), 400
 
     # Tóm tắt văn bản bằng Gemini
-    summary_prompt = f"Tóm tắt văn bản sau bằng tiếng Việt:\n{transcript}"
+    summary_prompt = f"Tóm tắt văn bản sau:\n{transcript}"
     summary = query_gemini(summary_prompt)
 
     # Tạo mindmap từ bản tóm tắt
